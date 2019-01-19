@@ -141,5 +141,46 @@ router.get('/locationList', async(req,res)=>{
    
     }
 
+});
+//basic information changing 
+router.put('/editTruck',(req,res)=>{
+  let newTruck=req.body.truck;
+     if (typeof newTruck === 'undefined') {
+      res.status(404).json({
+        message: "input fild not specified properly within truck object json formate "
+      })
+    }
+  else if (! (typeof newTruck.truckReg==='undefined') && !(typeof newTruck.owner ==='undefined')&& !( typeof newTruck.capacity==='undefined' ) )
+  {
+let query = {
+  $set: {
+    owner:newTruck.owner,
+    capacity: newTruck.capacity,
+    otherInformation: newTruck.otherInformation,
+  }
+}
+TruckModal.findOneAndUpdate({
+  "truckReg":newTruck.truckReg
+}, query, {
+  new: true
+},
+function (err, doc) {
+if(err) {res.status(500).json({
+  message:"error occured"
+})
+}else{
+  res.status(201).send(doc)
+}
+
+})
+
+  }
+
+  else{
+    res.status(404).json({
+      message:"input fild not specified properly "
+    })
+  }
+  
 })
 module.exports = router;
