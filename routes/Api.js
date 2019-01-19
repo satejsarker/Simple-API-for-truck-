@@ -5,6 +5,7 @@ var TruckModal = require('../models/Truck');
 router.get('/', function (req, res, next) {
   res.send('respond with a resource');
 });
+///for crrating a truck**** post methord 
 router.post('/createTruck', (req, res) => {
   console.log(req.body);
   let insetVal = req.body;
@@ -44,7 +45,7 @@ router.post('/createTruck', (req, res) => {
   // res.send(req.body);
 });
 
-
+//to get a perticular truck------GET
 router.get('/getTruck', async (req, res) => {
   console.log(req.query.truckReg)
   if (typeof req.query.truckReg == 'undefined') {
@@ -64,6 +65,8 @@ router.get('/getTruck', async (req, res) => {
   }
 
 });
+
+//for getting all the truck information ---get
 router.get('/allTruck', async (req, res) => {
   console.log('all')
   let allTruck = await TruckModal.find({});
@@ -77,6 +80,8 @@ router.get('/allTruck', async (req, res) => {
   res.status(200).json(allTruck);
 });
 
+
+///*************location update for a truck last location will be updated-- PUT */
 router.put('/updateLocation', (req, res) => {
   var truckReg = req.body.truckReg;
   var lat = req.body.location.Latitude;
@@ -111,7 +116,7 @@ res.status(201).json({
     }
   })
 });
-
+//location list of a particular truck in decending order ---get
 router.get('/locationList', async(req,res)=>{
   let truckReg=req.query.truckReg;
   if(typeof truckReg=='undefined'){
@@ -142,7 +147,7 @@ router.get('/locationList', async(req,res)=>{
     }
 
 });
-//basic information changing 
+//basic information changing of a truck ---put 
 router.put('/editTruck',(req,res)=>{
   let newTruck=req.body.truck;
      if (typeof newTruck === 'undefined') {
